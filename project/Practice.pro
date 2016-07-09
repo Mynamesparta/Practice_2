@@ -13,15 +13,19 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     matrix.cpp \
-    convolutional_neural_network.cpp \
+    NeuronClasses//convolutional_neural_network.cpp \
     #neuralnetwork.cpp \
-    neuron.cpp
+    NeuronClasses//neuron.cpp \
+    NeuronClasses//searcher.cpp \
+    image.cpp
 
 HEADERS  += mainwindow.h \
     matrix.h \
     World_of_Const.h \
-    convolutional_neural_network.h \
+    NeuronClasses//convolutional_neural_network.h \
     #neuralnetwork.h \
-    neuron.h
+    NeuronClasses//neuron.h \
+    NeuronClasses//searcher.h \
+    image.h
 
 FORMS    += mainwindow.ui

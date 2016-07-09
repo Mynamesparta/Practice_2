@@ -7,7 +7,7 @@ Matrix::Matrix(int w,int h)
     {
         data[i].resize(w);
     }
-    qDebug()<<data;
+    //qDebug()<<data;
 }
 
 Matrix::Matrix()
@@ -15,9 +15,20 @@ Matrix::Matrix()
 
 }
 
+void Matrix::Initialization(int w ,int h)
+{
+    data.resize(h);
+    for(int i=0;i<h;i++)
+    {
+        data[i].resize(w);
+    }
+    //qDebug()<<data;
+
+}
+
 double& Matrix::getElement(int i, int j)
 {
-    if(i<0||i>=_w||j<0||j>=_h)
+    if(i<0||i>=w()||j<0||j>=h())
     {
         null_elem=0;
         return null_elem;
@@ -37,13 +48,13 @@ QVector<double> Matrix::operator [](int i)
 
 Matrix::Matrix Matrix::operator *(Matrix &weight)
 {
-    Matrix c(_w,_h);
+    Matrix c(w(),h());
     static int i,j,di,dj;
     static int dw,dh;
     dw=weight.w()/2;
     dh=weight.h()/2;
-    for(i=0;i<_w;i+=step_of_WeightM)
-        for(j=0;j<_h;j+=step_of_WeightM)
+    for(i=0;i<w();i+=step_of_WeightM)
+        for(j=0;j<h();j+=step_of_WeightM)
         {
             for(di=0;di<weight.w();di++)
             {
@@ -58,11 +69,11 @@ Matrix::Matrix Matrix::operator *(Matrix &weight)
 
 Matrix::Matrix Matrix::operator /(int b)
 {
-    Matrix c(_w/b,_h/b);
+    Matrix c(w()/b,h()/b);
     static int i,j,di,dj;
     static double max,elem;
-    for(i=0;i<_w;i+=b)
-        for(j=0;j<_h;j+=b)
+    for(i=0;i<w();i+=b)
+        for(j=0;j<h();j+=b)
         {
             max=-1;
             for(di=0;di<b;di++)
@@ -79,16 +90,16 @@ Matrix::Matrix Matrix::operator /(int b)
 
 void Matrix::operator =(Matrix& b)
 {
-    this->_h=b.h();
-    this->_w=b.w();
     data=b.getData();
 }
 
 int Matrix::h()
 {
-    return _h;
+    return data.size();
 }
 int Matrix::w()
 {
-    return _w;
+    if(h()==0)
+        return 0;
+    return data[0].size();
 }

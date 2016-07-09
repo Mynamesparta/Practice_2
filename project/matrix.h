@@ -9,18 +9,18 @@ class Matrix
 public:
     Matrix(int w,int h);
     Matrix();
+    void Initialization(int w ,int h);
     QVector<double> operator[](int i);
     double& getElement(int i,int j);
     QVector<QVector<double> >& getData();
     Matrix operator*(Matrix &b);
     Matrix operator/(int b);
     void operator=(Matrix&);
-    inline int w();
-    inline int h();
+     int w();
+     int h();
 
 private:
     QVector<QVector<double> > data;
-    int _w,_h;
     double null_elem;
 };
 
