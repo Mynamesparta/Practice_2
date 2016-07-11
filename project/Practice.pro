@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     #neuralnetwork.cpp \
     NeuronClasses//neuron.cpp \
     NeuronClasses//searcher.cpp \
-    image.cpp
+    ImageController//image.cpp \
+    ImageController/loader.cpp
 
 HEADERS  += mainwindow.h \
     matrix.h \
@@ -26,6 +27,7 @@ HEADERS  += mainwindow.h \
     #neuralnetwork.h \
     NeuronClasses//neuron.h \
     NeuronClasses//searcher.h \
-    image.h
+    ImageController//image.h \
+    ImageController/loader.h
 
 FORMS    += mainwindow.ui

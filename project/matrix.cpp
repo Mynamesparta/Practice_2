@@ -20,6 +20,7 @@ void Matrix::Initialization(int w ,int h)
     data.resize(h);
     for(int i=0;i<h;i++)
     {
+        data[i].clear();
         data[i].resize(w);
     }
     //qDebug()<<data;
@@ -41,7 +42,7 @@ QVector<QVector<double> >& Matrix::getData()
     return data;
 }
 
-QVector<double> Matrix::operator [](int i)
+QVector<double>& Matrix::operator [](int i)
 {
     return data[i];
 }
@@ -102,4 +103,31 @@ int Matrix::w()
     if(h()==0)
         return 0;
     return data[0].size();
+}
+
+QString Matrix::toString()
+{
+    QString text;
+    for(int y=0;y<h();y++)
+    {
+        for(int x=0;x<w();x++)
+        {
+            text+=QString::number(data[y][x])+" ";
+        }
+        text+="\n";
+    }
+    return text;
+}
+
+double Matrix::mid()
+{
+    double mid=0;
+    double n=0;
+    for(int y=0;y<h();y++)
+        for(int x=0;x<w();x++)
+        {
+            mid=mid*(n/(n+1))+data[y][x]/(n+1);
+            n++;
+        }
+    return mid;
 }

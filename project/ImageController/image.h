@@ -15,7 +15,12 @@ public:
     Image(QString path);
     void Initialization(QImage& image);
     void operator=(Image i);
+    void resize(int w,int h);
+    void save(QString path);
     Matrix red,green,blue;
+private:
+    void _resize(double w,double h,Matrix& m);
+
 };
 
 #endif // IMAGE_H
