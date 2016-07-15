@@ -9,14 +9,14 @@
 #include "World_of_Const.h"
 
 
-class Neuron
+class NeuronM
 {
 public:
-    Neuron(QString dir,QString name,int w=w_of_Neuron,int h=h_of_Neuron);
-    Neuron();
+    NeuronM(QString dir,QString name,int w=w_of_Neuron,int h=h_of_Neuron);
+    NeuronM();
     void Initialization(QString dir,QString name,int w=w_of_Neuron,int h=h_of_Neuron);
     void Save();
-    void operator=(Neuron b);
+    void operator=(NeuronM b);
     Matrix weight;
     QString name;
     QString dir;

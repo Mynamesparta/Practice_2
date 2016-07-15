@@ -13,7 +13,7 @@ Searcher::Searcher(QString qsdir, QString name):dir(qsdir),name(name)
         foreach (QFileInfo fileinfo, list)
         {
             qDebug()<<"Load:"<<fileinfo.fileName();
-            Neuron n(fileinfo.filePath(),fileinfo.fileName());
+            NeuronM n(fileinfo.filePath(),fileinfo.fileName());
             hideNeuron<<n;
         }
         outputNeuron.Initialization(dir.path()+"/output.txt","output.txt");
@@ -45,7 +45,7 @@ void Searcher::Initialization(QString qsdir,QString _name)
         foreach (QFileInfo fileinfo, list)
         {
             qDebug()<<"Load:"<<fileinfo.fileName();
-            Neuron n(fileinfo.filePath(),fileinfo.fileName());
+            NeuronM n(fileinfo.filePath(),fileinfo.fileName());
             hideNeuron<<n;
         }
         outputNeuron.Initialization(dir.path()+"/output.txt","output.txt");
@@ -69,12 +69,12 @@ QString Searcher::getName()
     return name;
 }
 
-QVector<Neuron>& Searcher::getHideNeuron()
+QVector<NeuronM>& Searcher::getHideNeuron()
 {
     return hideNeuron;
 }
 
-Neuron& Searcher::getOutNeuron()
+NeuronM& Searcher::getOutNeuron()
 {
     return outputNeuron;
 }

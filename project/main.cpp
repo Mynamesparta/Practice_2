@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
+#include "controller.h"
 #include "matrix.h"
 #include "World_of_Const.h"
 #include "NeuronClasses/searcher.h"
@@ -10,16 +10,16 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    //w.show();
+    Controller con(&a);
+    //Loader l;
+    //qDebug()<<l.getAllFiles(pathTrainingImage);
     //ConvolutionalNeuralNetwork cnn;
-    Loader l;
-    //
+    /*/
     l.add(pathTrainingImage+"dog",-1,true);
     l.take();
     l.take();
     l.take();
-    /*/
+    //
     Matrix m(4,1);
     for(int i=0;i<1;i++)
         for(int j=0;j<4;j++)
@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     i.resize(6,1);
     qDebug()<<i.red.toString();
     /*/
-
-    return 0;
+    //return 0;
     return a.exec();
 }

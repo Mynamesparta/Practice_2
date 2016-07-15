@@ -14,10 +14,11 @@ Image::Image(QImage &image)
         for(int j=0;j<image.width();j++)
         {
             rgb=image.pixel(j,i);
-            red[i][j]=qRed(rgb);
-            blue[i][j]=qBlue(rgb);
-            green[i][j]=qGreen(rgb);
+            red[i][j]=qRed(rgb)/255;
+            blue[i][j]=qBlue(rgb)/255;
+            green[i][j]=qGreen(rgb)/255;
         }
+
 }
 
 Image::Image(QString path)
@@ -38,9 +39,9 @@ void Image::Initialization(QImage &image)
         for(int j=0;j<image.width();j++)
         {
             rgb=image.pixel(j,i);
-            red[i][j]=qRed(rgb);
-            blue[i][j]=qBlue(rgb);
-            green[i][j]=qGreen(rgb);
+            red[i][j]=qRed(rgb)/255;
+            blue[i][j]=qBlue(rgb)/255;
+            green[i][j]=qGreen(rgb)/255;
         }
     qDebug()<<red.mid();
 }
@@ -66,13 +67,23 @@ void Image::save(QString path)
     im.save(path);
 }
 
+QImage Image::getQImage()
+{
+    QImage im(red.w(),red.h(),QImage::Format_RGB32);
+    for(int x=0;x<red.w();x++)
+    {
+        for(int y=0;y<red.h();y++)
+        {
+            im.setPixel(x,y,qRgb((int)red[y][x],(int)green[y][x],(int)blue[y][x]));
+        }
+    }
+    return im;
+}
+
 void Image::resize(int w, int h)
 {
-    qDebug()<<"red";
     _resize(w,h,red);
-    qDebug()<<"green";
     _resize(w,h,green);
-    qDebug()<<"blue";
     _resize(w,h,blue);
 }
 

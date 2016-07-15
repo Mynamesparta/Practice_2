@@ -1,6 +1,6 @@
-#include "neuron.h"
+#include "neuronm.h"
 
-Neuron::Neuron(QString dir,QString name,int w,int h):dir(dir),name(name.replace(".txt","")),weight(w,h)
+NeuronM::NeuronM(QString dir,QString name,int w,int h):dir(dir),name(name.replace(".txt","")),weight(w,h)
 {
     qDebug()<<name.replace(".txt","");
     QFile file(dir);
@@ -53,12 +53,12 @@ Neuron::Neuron(QString dir,QString name,int w,int h):dir(dir),name(name.replace(
 
 }
 
-Neuron::Neuron()
+NeuronM::NeuronM()
 {
 
 }
 
-void Neuron::Initialization(QString _dir, QString _name, int w, int h)
+void NeuronM::Initialization(QString _dir, QString _name, int w, int h)
 {
     dir=_dir;
     name=_name.replace(".txt","");
@@ -115,7 +115,7 @@ void Neuron::Initialization(QString _dir, QString _name, int w, int h)
 
 }
 
-void Neuron::Save()
+void NeuronM::Save()
 {
     QFile file(dir);
     file.open(QIODevice::WriteOnly|QIODevice::Text);
@@ -135,7 +135,7 @@ void Neuron::Save()
 
 }
 
-void Neuron::operator =(Neuron b)
+void NeuronM::operator =(NeuronM b)
 {
     if(this==&b)
         return;

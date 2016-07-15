@@ -1,0 +1,10 @@
+bicycle
+cat
+dog
+house
+human
+jupiter
+motorcycle
+saturn
+tea cup
+tree

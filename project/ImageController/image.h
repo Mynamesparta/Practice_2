@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QColor>
 #include <QString>
+
 #include "matrix.h"
 
 class Image
@@ -17,9 +18,12 @@ public:
     void operator=(Image i);
     void resize(int w,int h);
     void save(QString path);
+    QImage getQImage();
     Matrix red,green,blue;
 private:
     void _resize(double w,double h,Matrix& m);
+    QString name_of_image;
+    QString name_of_class;
 
 };
 

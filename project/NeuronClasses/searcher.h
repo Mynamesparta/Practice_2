@@ -1,7 +1,7 @@
 #ifndef SEARCHER_H
 #define SEARCHER_H
 
-#include "neuron.h"
+#include "neuronm.h"
 #include <QDebug>
 #include <QVector>
 #include <QString>
@@ -16,13 +16,13 @@ public:
     void Initialization(QString qsdir,QString name);
     void operator= (Searcher s);
     inline QString getName();
-    inline QVector<Neuron> & getHideNeuron();
-    inline Neuron& getOutNeuron();
+    inline QVector<NeuronM> & getHideNeuron();
+    inline NeuronM& getOutNeuron();
 private:
     QDir dir;
     QString name;
-    QVector<Neuron>  hideNeuron;
-    Neuron outputNeuron;
+    QVector<NeuronM>  hideNeuron;
+    NeuronM outputNeuron;
 };
 
 #endif // SEARCHER_H

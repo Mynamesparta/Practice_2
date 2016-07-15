@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ImageForm</class>
+ <widget class="QWidget" name="ImageForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>549</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGraphicsView" name="View">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>410</width>
+     <height>410</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>430</y>
+     <width>401</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+   <property name="format">
+    <string>%p/25</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar1">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>10</y>
+     <width>160</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="textDirection">
+    <enum>QProgressBar::BottomToTop</enum>
+   </property>
+   <property name="format">
+    <string>Hello</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar2">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>93</y>
+     <width>160</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="textDirection">
+    <enum>QProgressBar::BottomToTop</enum>
+   </property>
+   <property name="format">
+    <string>Hello</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar3">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>176</y>
+     <width>160</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="textDirection">
+    <enum>QProgressBar::BottomToTop</enum>
+   </property>
+   <property name="format">
+    <string>Hello</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar4">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>259</y>
+     <width>160</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="textDirection">
+    <enum>QProgressBar::BottomToTop</enum>
+   </property>
+   <property name="format">
+    <string>Hello</string>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar5">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>342</y>
+     <width>160</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="textDirection">
+    <enum>QProgressBar::BottomToTop</enum>
+   </property>
+   <property name="format">
+    <string>Hello</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BackButton">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>500</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Back to Menu</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="NextButton">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>460</y>
+     <width>400</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

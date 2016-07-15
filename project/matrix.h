@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QString>
 #include "World_of_Const.h"
+#include "math.h"
 using namespace World_of_Const;
 class Matrix
 {
@@ -16,11 +17,15 @@ public:
     QVector<QVector<double> >& getData();
     Matrix operator*(Matrix &b);
     Matrix operator/(int b);
-    void operator=(Matrix&);
+    void operator=(Matrix);
+    Matrix operator+(Matrix);
     int w();
     int h();
     QString toString();
     double mid();
+    void normalizationF();
+    void normalizationC();
+    void Function();
 
 private:
     QVector<QVector<double> > data;

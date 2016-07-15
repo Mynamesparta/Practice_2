@@ -29,7 +29,7 @@ void Matrix::Initialization(int w ,int h)
 
 double& Matrix::getElement(int i, int j)
 {
-    if(i<0||i>=w()||j<0||j>=h())
+    if(j<0||j>=w()||i<0||i>=h())
     {
         null_elem=0;
         return null_elem;
@@ -89,9 +89,19 @@ Matrix::Matrix Matrix::operator /(int b)
     return c;
 }
 
-void Matrix::operator =(Matrix& b)
+void Matrix::operator =(Matrix b)
 {
     data=b.getData();
+}
+
+Matrix Matrix::operator +(Matrix b)
+{
+    Matrix c(w(),h());
+    static int x,y;
+    for(x=0;x<w();x++)
+        for(y=0;y<h();y++)
+            c[y][x]=this->getElement(y,x)+b.getElement(y,x);
+    return c;
 }
 
 int Matrix::h()
@@ -130,4 +140,37 @@ double Matrix::mid()
             n++;
         }
     return mid;
+}
+
+
+void Matrix::normalizationF()
+{
+    for(int x=0;x<w();x++)
+    {
+        for(int y=0;y<h();y++)
+        {
+            data[y][x]/=255;
+        }
+    }
+}
+void Matrix::normalizationC()
+{
+    for(int x=0;x<w();x++)
+    {
+        for(int y=0;y<h();y++)
+        {
+            data[y][x]*=255;
+        }
+    }
+}
+
+void Matrix::Function()
+{
+    for(int x=0;x<w();x++)
+    {
+        for(int y=0;y<h();y++)
+        {
+            data[y][x]=f(data[y][x]);
+        }
+    }
 }
