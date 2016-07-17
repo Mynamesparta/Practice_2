@@ -2,6 +2,7 @@
 
 NeuronM::NeuronM(QString dir,QString name,int w,int h):dir(dir),name(name.replace(".txt","")),weight(w,h)
 {
+    qDebug()<<dir;
     qDebug()<<name.replace(".txt","");
     QFile file(dir);
     file.open(QIODevice::ReadOnly|QIODevice::Text);
@@ -142,4 +143,9 @@ void NeuronM::operator =(NeuronM b)
     weight=b.weight;
     name=b.name;
     dir=b.dir;
+}
+
+QVector<double>& NeuronM::operator [](int i)
+{
+    return weight[i];
 }

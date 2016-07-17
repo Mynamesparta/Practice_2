@@ -16,6 +16,7 @@ public:
     double& getElement(int i,int j);
     QVector<QVector<double> >& getData();
     Matrix operator*(Matrix &b);
+    Matrix operator*(int b);
     Matrix operator/(int b);
     void operator=(Matrix);
     Matrix operator+(Matrix);
@@ -25,7 +26,11 @@ public:
     double mid();
     void normalizationF();
     void normalizationC();
-    void Function();
+    Matrix Function();
+    Matrix dFunction();
+    Matrix lazy_middel(int w,int h);
+    Matrix Reverse();
+    static Matrix multiplication(Matrix& a,Matrix& b);
 
 private:
     QVector<QVector<double> > data;

@@ -4,7 +4,7 @@ NeuronV::NeuronV()
 {
 }
 
-NeuronV::NeuronV(QVector<Matrix> &b)
+NeuronV::NeuronV(QVector<Matrix>& b)
 {
     for(int i=0;i<b.size();i++)
     {
@@ -16,6 +16,11 @@ NeuronV::NeuronV(QVector<Matrix> &b)
             }
         }
     }
+}
+
+NeuronV::NeuronV(QVector<double> b)
+{
+    data=b;
 }
 
 NeuronV::NeuronV(QString _path,QString name,int size):name(name),path(_path)
@@ -33,7 +38,7 @@ NeuronV::NeuronV(QString _path,QString name,int size):name(name),path(_path)
         }
         file.close();
     }
-    save();
+    Save();
 }
 
 NeuronV::NeuronV(int size)
@@ -41,7 +46,7 @@ NeuronV::NeuronV(int size)
     data.resize(size);
 }
 
-void NeuronV::save()
+void NeuronV::Save()
 {
     QFile file(path);
     if(file.open(QIODevice::WriteOnly|QIODevice::Text))
@@ -57,12 +62,24 @@ void NeuronV::save()
     }
 }
 
-void NeuronV::Function()
+NeuronV NeuronV::Function()
 {
+    NeuronV c(data.size());
     for(int i=0;i<data.size();i++)
     {
-        data[i]=f(data[i]);
+        c[i]=f(data[i]);
     }
+    return c;
+}
+
+NeuronV NeuronV::dFunction()
+{
+    NeuronV c(data.size());
+    for(int i=0;i<data.size();i++)
+    {
+        c[i]=df(data[i]);
+    }
+    return c;
 }
 
 double NeuronV::operator *(NeuronV b)
@@ -72,6 +89,14 @@ double NeuronV::operator *(NeuronV b)
     {
         c+=data[i]*b[i];
     }
+    return c;
+}
+
+NeuronV NeuronV::operator -(NeuronV &b)
+{
+    NeuronV c(data.size());
+    for(int i=0;i<data.size();i++)
+        c[i]=data[i]-b[i];
     return c;
 }
 

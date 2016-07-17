@@ -13,14 +13,17 @@ class NeuronV
 {
 public:
     NeuronV();
-    NeuronV(QVector<Matrix>&b);
+    NeuronV(QVector<Matrix> &b);
+    NeuronV(QVector<double> b);
     NeuronV(QString path,QString name, int size);
     NeuronV(int size);
-    void Function();
+    NeuronV Function();
+    NeuronV dFunction();
     double& operator[](int i);
     double operator*(NeuronV b);
+    NeuronV operator-(NeuronV& b);
     void operator=(NeuronV b);
-    void save();
+    void Save();
     QVector<double> data;
 
 

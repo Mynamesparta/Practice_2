@@ -6,34 +6,20 @@
 #include "NeuronClasses/convolutional_neural_network.h"
 #include "ImageController/loader.h"
 #include "ImageController/image.h"
+#include "NeuronClasses/neuronv.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Controller con(&a);
-    //Loader l;
-    //qDebug()<<l.getAllFiles(pathTrainingImage);
-    //ConvolutionalNeuralNetwork cnn;
     /*/
-    l.add(pathTrainingImage+"dog",-1,true);
-    l.take();
-    l.take();
-    l.take();
-    //
-    Matrix m(4,1);
-    for(int i=0;i<1;i++)
-        for(int j=0;j<4;j++)
-        {
-            m[i][j]=j;
-        }
-    qDebug()<<m.toString();
-    Image i;
-    i.red=m;
-    i.green=m;
-    i.blue=m;
-    i.resize(6,1);
-    qDebug()<<i.red.toString();
+    Matrix b(5,5);
+    for(int i=0;i<5;i++)
+        for(int j=0;j<5;j++)
+            b[i][j]=i+j;
+    qDebug()<<b.toString();
+    qDebug()<<(b*3).toString();
+    return 0;
     /*/
-    //return 0;
     return a.exec();
 }

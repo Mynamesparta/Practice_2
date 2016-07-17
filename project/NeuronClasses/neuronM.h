@@ -17,6 +17,7 @@ public:
     void Initialization(QString dir,QString name,int w=w_of_Neuron,int h=h_of_Neuron);
     void Save();
     void operator=(NeuronM b);
+    QVector<double>& operator[](int i);
     Matrix weight;
     QString name;
     QString dir;
