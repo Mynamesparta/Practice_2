@@ -5,25 +5,39 @@
 #include <QString>
 #include <QDir>
 #include <QRegExp>
+#include <QThread>
 #include "neuronv.h"
 #include "matrix.h"
 #include "World_of_Const.h"
 #include "searcher.h"
 #include "ImageController/image.h"
-class ConvolutionalNeuralNetwork
+class ConvolutionalNeuralNetwork:public QObject
 {
+    Q_OBJECT
 public:
     ConvolutionalNeuralNetwork();
     QString getName_of_Classes(QString path);
     QVector<int> getVofInt(QString path);
-    QVector<double> Evolve(Image& image);
-    void Training(Image& image,QVector<double>& d);
+    QVector<double> Evolve(Image* image);
+    double Training(Image* image,QVector<double>& d);
     void changeWeight(NeuronV& delta,QVector<NeuronV>& weight_1_n,QVector<NeuronV>& weight_n,QVector<NeuronV>& weight_n_1,NeuronV& Y);
     void changeWeight(QVector<Matrix> &delta, QVector<NeuronM> &weight_1_n, QVector<NeuronM> &weight_n, QVector<NeuronM> &weight_n_1, QVector<Matrix> &Y);
-    void findDelta(QVector<Matrix>& V,QVector<NeuronM>& weight_n,QVector<Matrix>& nextDelta,QVector<Matrix>& currentDelta);
+    void findDelta(QVector<Matrix>& dY,QVector<NeuronM>& weight_n,QVector<Matrix>& nextDelta,QVector<Matrix>& currentDelta);
+    void findDelta(NeuronV& dY,QVector<NeuronV>& weight_n,NeuronV& nextDelta, NeuronV& currentDelta);
     //double multiplication(QVector<Matrix>& vec,Matrix& weight);
     //double multiplication(QVector<double>& vec,Matrix& weight);
+    void run();
+    void Ini();
+public slots:
+    void Slot_Evolve(Image* image);
+    void Slot_Training(Image* image,QVector<double> d);
+    void Slot_End_Training();
+    void Slot_Update_Alpha_Eta(double al,double e);
+signals:
+    void TrainingEnd(double E);
+    void EvolveEnd(QVector<double>);
 private:
+    bool endTraining;
     int _height;
     int _deapth;
     QDir dir;
@@ -38,10 +52,10 @@ private:
     QVector<QRegExp> reg_for_classes_name;
     void ini_vector_of_classes_name();
 
-    QVector<QVector<Matrix> > hide_mapsY;
-    QVector<QVector<Matrix> > hide_mapsV;
-    QVector<NeuronV> full_mapsY;
-    QVector<NeuronV> full_mapsV;
+    QVector<QVector<Matrix> > hide_maps_Y;
+    QVector<QVector<Matrix> > hide_maps_dY;
+    QVector<NeuronV> full_maps_Y;
+    QVector<NeuronV> full_maps_dY;
 
     double eta,alpha;
 

@@ -22,8 +22,11 @@ public:
     QVector<QStringList> getAllClassesFiles(QString dir);
     int size();
     Image take();
+    Image* takepointer();
     QQueue<QString> getQueue();
     void Clear();
+    void Save_Queue(QString name_of_file,int);
+    int Load_Queue(QString name_of_file);
 private:
     QQueue<QString> queue;
 };

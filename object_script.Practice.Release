@@ -13,6 +13,7 @@ INPUT(
 ./release\controller.o
 ./release\imageform.o
 ./release\moc_mainwindow.o
+./release\moc_convolutional_neural_network.o
 ./release\moc_testform.o
 ./release\moc_trainingform.o
 ./release\moc_controller.o

@@ -24,7 +24,13 @@ public:
     NeuronV operator-(NeuronV& b);
     void operator=(NeuronV b);
     void Save();
+    double lenght();
+    void Ini();
+    void SaveMap(QString path);
     QVector<double> data;
+    double b;
+
+    static QVector<Matrix> getVec_of_Matrix(NeuronV& vec,int w,int h);
 
 
 private:

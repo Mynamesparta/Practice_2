@@ -16,6 +16,8 @@ NeuronM::NeuronM(QString dir,QString name,int w,int h):dir(dir),name(name.replac
     QStringList stringlist;
     int i=0;
     line=in.readLine();
+    weight.b=(line.isNull()?0:line.toDouble());
+    line=in.readLine();
     while(!line.isNull())
     {
         if(line=="")
@@ -58,6 +60,9 @@ NeuronM::NeuronM()
 {
 
 }
+NeuronM::~NeuronM()
+{
+}
 
 void NeuronM::Initialization(QString _dir, QString _name, int w, int h)
 {
@@ -77,6 +82,8 @@ void NeuronM::Initialization(QString _dir, QString _name, int w, int h)
     QString line;
     QStringList stringlist;
     int i=0;
+    line=in.readLine();
+    weight.b=(line.isNull()?0:line.toDouble());
     line=in.readLine();
     while(!line.isNull())
     {
@@ -122,7 +129,7 @@ void NeuronM::Save()
     file.open(QIODevice::WriteOnly|QIODevice::Text);
     QTextStream out(&file);
     //qDebug()<<"weight size:"<<weight.h()<<"X"<<weight.w();
-
+    out<<weight.b<<"\n";
     for(int i=0;i<weight.h();i++)
     {
         for(int j=0;j<weight.w();j++)
@@ -148,4 +155,20 @@ void NeuronM::operator =(NeuronM b)
 QVector<double>& NeuronM::operator [](int i)
 {
     return weight[i];
+}
+
+void NeuronM::Ini()
+{
+    for(int i=0;i<weight.h();i++)
+        for(int j=0;j<weight.w();j++)
+            weight[i][j]=randDouble(IniA,IniB);
+    weight.b=randDouble(IniA,IniB);
+    double mid=weight.mid();
+
+    for(int i=0;i<weight.h();i++)
+        for(int j=0;j<weight.w();j++)
+            weight[i][j]-=mid;
+    weight.b-=mid;
+    //qDebug()<<mid<<weight.mid();
+    Save();
 }

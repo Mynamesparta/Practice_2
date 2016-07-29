@@ -19,9 +19,11 @@ public:
     void resize(int w,int h);
     void save(QString path);
     QImage getQImage();
+    QString getPath();
     Matrix red,green,blue;
 private:
     void _resize(double w,double h,Matrix& m);
+    QString _path;
     QString name_of_image;
     QString name_of_class;
 

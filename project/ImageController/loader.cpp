@@ -27,8 +27,9 @@ void Loader::addFiles(QString dir, int number, bool random)
         while(list.size()>0)
         {
             r=randInt(0,list.size()-1);
-            qDebug()<<r<<list.size();
+            //qDebug()<<r<<list.size();
             queue.enqueue(dir+"/"+list[r]);
+            qDebug()<<"Load Time"<<dir+"/"+list[r];
             list.removeAt(r);
             if(number!=-1)
             {
@@ -43,6 +44,7 @@ void Loader::addFiles(QString dir, int number, bool random)
         for(int j=0;j<list.size();j++)
         {
             queue.enqueue(dir+"/"+list[j]);
+            qDebug()<<"Load Time"<<dir+"/"+list[j];
             if(number>=1)
             {
                 i++;
@@ -62,7 +64,7 @@ void Loader::addFiles(QStringList list, int number, bool random)
         while(list.size()>0)
         {
             r=randInt(0,list.size()-1);
-            qDebug()<<r<<list.size();
+            //qDebug()<<r<<list.size();
             queue.enqueue(list[r]);
             list.removeAt(r);
             if(number!=-1)
@@ -105,11 +107,11 @@ QStringList Loader::getAllFiles(QString dir)
         if(name.contains(qre))
         {
             res<<d.path()+"/"+name;
-            qDebug()<<"name"<<d.path()+"/"+name;
+            //qDebug()<<"name"<<d.path()+"/"+name;
         }
         else
         {
-            qDebug()<<"dir"<<d.path()+"/"+name;
+            //qDebug()<<"dir"<<d.path()+"/"+name;
             res<<getAllFiles(d.path()+"/"+name);
         }
     }
@@ -155,6 +157,23 @@ Image Loader::take()
     return im;
 }
 
+Image* Loader::takepointer()
+{
+    if(queue.size()==0)
+    {
+        qDebug()<<"Queue empty.";
+        return new Image();
+    }
+    Image* im=new Image(queue.dequeue());
+    im->resize(w_of_inputImage,h_of_inputImage);
+    static int index=0;
+
+    //im.save(pathTestImage+QString::number(index++)+".jpg");
+
+    return im;
+
+}
+
 QQueue<QString> Loader::getQueue()
 {
     return queue;
@@ -164,3 +183,47 @@ void Loader::Clear()
 {
     queue.clear();
 }
+
+void Loader::Save_Queue(QString name_of_file,int number)
+{
+    QFile file(pathLoader+ name_of_file);
+    file.open(QIODevice::WriteOnly|QIODevice::Text);
+    QTextStream out(&file);
+    out<<QString::number(number)<<"\n";
+    for(int i=0;i<queue.size();i++)
+    {
+        if(!queue[i].isEmpty())
+            out<<queue[i]<<"\n";
+    }
+    file.close();
+    queue.clear();
+}
+
+int Loader::Load_Queue(QString name_of_file)
+{
+    QFile file(pathLoader+name_of_file);
+    if(!file.exists())
+        return 0;
+    file.open(QIODevice::ReadOnly|QIODevice::Text);
+    QString text;
+    bool isOk=false;
+    int number;
+    if(!file.atEnd())
+    {
+        text=file.readLine();
+        number=text.toInt();
+    }
+    while(!file.atEnd())
+    {
+        text=file.readLine();
+        if(!text.isEmpty()||text.contains(QRegExp(" ")))
+        {
+            queue.enqueue(text);
+        }
+    }
+    file.close();
+    file.remove();
+    return number;
+}
+
+

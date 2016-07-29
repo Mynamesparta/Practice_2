@@ -14,15 +14,16 @@ Image::Image(QImage &image)
         for(int j=0;j<image.width();j++)
         {
             rgb=image.pixel(j,i);
-            red[i][j]=qRed(rgb)/255;
-            blue[i][j]=qBlue(rgb)/255;
-            green[i][j]=qGreen(rgb)/255;
+            red[i][j]=qRed(rgb);
+            blue[i][j]=qBlue(rgb);
+            green[i][j]=qGreen(rgb);
         }
 
 }
 
 Image::Image(QString path)
 {
+    _path=path;
     QImage image(path);
     qDebug()<<"Ini";
     Initialization(image);
@@ -39,9 +40,9 @@ void Image::Initialization(QImage &image)
         for(int j=0;j<image.width();j++)
         {
             rgb=image.pixel(j,i);
-            red[i][j]=qRed(rgb)/255;
-            blue[i][j]=qBlue(rgb)/255;
-            green[i][j]=qGreen(rgb)/255;
+            red[i][j]=qRed(rgb);
+            blue[i][j]=qBlue(rgb);
+            green[i][j]=qGreen(rgb);
         }
     qDebug()<<red.mid();
 }
@@ -78,6 +79,11 @@ QImage Image::getQImage()
         }
     }
     return im;
+}
+
+QString Image::getPath()
+{
+    return _path;
 }
 
 void Image::resize(int w, int h)

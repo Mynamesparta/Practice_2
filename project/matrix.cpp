@@ -47,9 +47,9 @@ QVector<double>& Matrix::operator [](int i)
     return data[i];
 }
 
-Matrix::Matrix Matrix::operator *(Matrix &weight)
+Matrix* Matrix::operator *(Matrix &weight)
 {
-    Matrix c(w(),h());
+    Matrix* c=new Matrix(w(),h());
     static int j,i,dj,di;
     static int dw,dh;
     dw=weight.w()/2;
@@ -61,9 +61,10 @@ Matrix::Matrix Matrix::operator *(Matrix &weight)
             {
                 for(di=0;di<weight.h();di++)
                 {
-                    c.getElement(i,j)+=this->getElement(i+di-dh,j+dj-dw)*weight.getElement(di,dj);
+                    c->getElement(i,j)+=this->getElement(i+di-dh,j+dj-dw)*weight.getElement(di,dj);
                 }
             }
+            c->getElement(i,j)+=weight.b;
         }
     return c;
 }
@@ -109,19 +110,36 @@ Matrix::Matrix Matrix::operator /(int b)
     return c;
 }
 
-void Matrix::operator =(Matrix b)
+void Matrix::operator =(Matrix a)
 {
-    data=b.getData();
+    data=a.getData();
+    b=a.b;
+}
+
+void Matrix::operator =(Matrix* a)
+{
+    data=a->getData();
+    b=a->b;
+    delete a;
 }
 
 Matrix Matrix::operator +(Matrix b)
 {
-    Matrix c(w(),h());
+    //Matrix c(w(),h());
     static int x,y;
     for(x=0;x<w();x++)
         for(y=0;y<h();y++)
-            c[y][x]=this->getElement(y,x)+b.getElement(y,x);
-    return c;
+            b.getElement(y,x)=this->getElement(y,x)+b.getElement(y,x);
+    return b;
+}
+Matrix* Matrix::operator +(Matrix* b)
+{
+    //Matrix c(w(),h());
+    static int x,y;
+    for(x=0;x<w();x++)
+        for(y=0;y<h();y++)
+            b->getElement(y,x)=this->getElement(y,x)+b->getElement(y,x);
+    return b;
 }
 
 int Matrix::h()
@@ -159,6 +177,8 @@ double Matrix::mid()
             mid=mid*(n/(n+1))+data[y][x]/(n+1);
             n++;
         }
+    mid=mid*(n/(n+1))+b/(n+1);
+
     return mid;
 }
 
@@ -232,6 +252,27 @@ Matrix Matrix::lazy_middel(int _w, int _h)
     return rez;
 }
 
+Matrix Matrix::lazy_sum(int _w, int _h)
+{
+    Matrix rez(_w,_h);
+    static int x,y,dx,dy;
+    double n;
+    int _2w=_w/2,_2h=_h/2;
+    for(dx=-_2w;dx<=_2w;dx++)
+    {
+        for(dy=-_2h;dy<=_2h;dy++)
+        {
+            for(x=dx;x<w()+dx;x++)
+                for(y=dy;y<h()+dy;y++)
+                {
+                    rez[dy+_2h][dx+_2w]+=getElement(y,x);
+                }
+        }
+    }
+    return rez;
+
+}
+
 Matrix Matrix::Reverse()
 {
     Matrix c(w(),h());
@@ -240,13 +281,14 @@ Matrix Matrix::Reverse()
     {
         for(y=0;y<h();y++)
         {
-            c[y][x]=data[h()-y][w()-x];
+            c[y][x]=data[h()-y-1][w()-x-1];
         }
     }
+    c.b=0;
     return c;
 }
 
-Matrix Matrix::multiplication(Matrix &a, Matrix &b)
+Matrix Matrix::multiplication(Matrix &a, Matrix &b,int dw,int dh)
 {
     static int x,y;
     Matrix c(a.w(),a.h());
@@ -254,8 +296,69 @@ Matrix Matrix::multiplication(Matrix &a, Matrix &b)
     {
         for(y=0;y<a.h();y++)
         {
-            c[y][x]=a[y][x]*b[y][x];
+            c[y][x]=a.getElement(y+dh,x+dw)*b[y][x];
         }
     }
     return c;
 }
+
+double Matrix::scal_multiplication_sum(Matrix &a, Matrix &b, int dw, int dh)
+{
+    Matrix c=multiplication(a,b,dw,dh);
+
+    double rez=0;
+    for(int i=0;i<c.h();i++)
+        for(int j=0;j<c.w();j++)
+            rez+=c[i][j];
+    return rez;
+}
+double Matrix::scal_multiplication_mid(Matrix &a, Matrix &b, int dw, int dh)
+{
+    Matrix c=multiplication(a,b,dw,dh);
+    return c.mid();
+}
+
+
+Matrix Matrix::to1()
+{
+    Matrix c(w(),h());
+    for(int i=0;i<h();i++)
+        for(int j=0;j<w();j++)
+            c[i][j]=data[i][j]/255;
+
+    /*/
+    double m=mid();
+    for(int i=0;i<h();i++)
+        for(int j=0;j<w();j++)
+            c[i][j]-=m;
+            /*/
+    return c;
+}
+
+Matrix Matrix::to255()
+{
+    Matrix c(w(),h());
+    for(int i=0;i<h();i++)
+        for(int j=0;j<w();j++)
+            c[i][j]=data[i][j]*255;
+    return c;
+}
+
+double Matrix::getSum_of_element()
+{
+    double rez=0;
+    for(int i=0;i<h();i++)
+        for(int j=0;j<w();j++)
+            rez+=data[i][j];
+    return rez;
+}
+
+void Matrix::SaveMap(QString path)
+{
+    QFile file(path);
+    file.open(QIODevice::WriteOnly|QIODevice::Text);
+    QTextStream out(&file);
+    out<<toString();
+    file.close();
+}
+

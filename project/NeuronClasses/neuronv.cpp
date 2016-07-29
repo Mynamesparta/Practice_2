@@ -4,23 +4,23 @@ NeuronV::NeuronV()
 {
 }
 
-NeuronV::NeuronV(QVector<Matrix>& b)
+NeuronV::NeuronV(QVector<Matrix>& a):b(0)
 {
-    for(int i=0;i<b.size();i++)
+    for(int i=0;i<a.size();i++)
     {
-        for(int x=0;x<b[i].w();x++)
+        for(int y=0;y<a[i].h();y++)
         {
-            for(int y=0;y<b[i].h();y++)
+            for(int x=0;x<a[i].w();x++)
             {
-                data<<b[i][y][x];
+                data<<a[i][y][x];
             }
         }
     }
 }
 
-NeuronV::NeuronV(QVector<double> b)
+NeuronV::NeuronV(QVector<double> a):b(0)
 {
-    data=b;
+    data=a;
 }
 
 NeuronV::NeuronV(QString _path,QString name,int size):name(name),path(_path)
@@ -30,6 +30,8 @@ NeuronV::NeuronV(QString _path,QString name,int size):name(name),path(_path)
     if(file.open(QIODevice::ReadOnly|QIODevice::Text))
     {
         QString line=file.readLine();
+        b=line.toDouble();
+        line=file.readLine();
         QStringList list=line.split(" ");
         for(int i=0;i<list.size()&&i<data.size();i++)
         {
@@ -53,6 +55,7 @@ void NeuronV::Save()
     {
         QString text;
         QTextStream out(&file);
+        out<<b<<"\n";
         for(int i=0;i<data.size();i++)
         {
             text+=QString::number(data[i])+" ";
@@ -60,6 +63,54 @@ void NeuronV::Save()
         out<<text;
         file.close();
     }
+}
+
+void NeuronV::SaveMap(QString path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+        QString text;
+        QTextStream out(&file);
+        out<<b<<"\n";
+        for(int i=0;i<data.size();i++)
+        {
+            text+=QString::number(data[i])+" ";
+        }
+        out<<text;
+        file.close();
+    }
+}
+
+double NeuronV::lenght()
+{
+    double l=0;
+    for(int i=0;i<data.size();i++)
+    {
+        l+=data[i]*data[i];
+    }
+    return l;
+}
+
+void NeuronV::Ini()
+{
+    double mid=0;
+    double n=0;
+    for(int i=0;i<data.size();i++)
+    {
+        data[i]=randDouble(IniA,IniB);
+        mid=mid*(n/(n+1))+data[i]/(n+1);
+        n++;
+    }
+    b=randDouble(IniA,IniB);
+    mid=mid*(n/(n+1))+b/(n+1);
+
+    for(int i=0;i<data.size();i++)
+    {
+        data[i]-=mid;
+    }
+    b-=mid;
+    Save();
 }
 
 NeuronV NeuronV::Function()
@@ -82,13 +133,14 @@ NeuronV NeuronV::dFunction()
     return c;
 }
 
-double NeuronV::operator *(NeuronV b)
+double NeuronV::operator *(NeuronV weight)
 {
     double c=0;
     for(int i=0;i<data.size();i++)
     {
-        c+=data[i]*b[i];
+        c+=data[i]*weight[i];
     }
+    c+=weight.b;
     return c;
 }
 
@@ -105,9 +157,35 @@ double& NeuronV::operator [](int i)
     return data[i];
 }
 
-void NeuronV::operator =(NeuronV b)
+void NeuronV::operator =(NeuronV a)
 {
-    data=b.data;
+    data=a.data;
+    b=a.b;
 }
 
 
+QVector<Matrix> NeuronV::getVec_of_Matrix(NeuronV &vec, int w,int h)
+{
+    QVector<Matrix> rez;
+    static int x,y;
+    x=0;
+    y=0;
+    Matrix m(w,h);
+    for(int i=0;i<vec.data.size();i++)
+    {
+        m[y][x]=vec[i];
+        x++;
+        if(x==w)
+        {
+            x=0;
+            y++;
+            if(y==h)
+            {
+                rez<<m;
+                y=0;
+            }
+        }
+    }
+    rez<<m;
+    return rez;
+}

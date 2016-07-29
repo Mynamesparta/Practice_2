@@ -13,6 +13,7 @@ INPUT(
 ./debug\controller.o
 ./debug\imageform.o
 ./debug\moc_mainwindow.o
+./debug\moc_convolutional_neural_network.o
 ./debug\moc_testform.o
 ./debug\moc_trainingform.o
 ./debug\moc_controller.o
